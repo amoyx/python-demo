@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- 若您需要使用Kendo UI Professional，请联系版权人获得合法的授权或许可。 -->
+    <!-- Bootstrap css -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- kendo ui css -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.common.min.css" rel="stylesheet">
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/styles/kendo.default.min.css" rel="stylesheet">
+    <!-- font-awesome -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/assets/fontawesome/css/font-awesome.css" rel="stylesheet">
+    <!--蓝鲸提供的公用样式库 -->
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/bk/css/bk.css" rel="stylesheet">
+    <link href="https://magicbox.bk.tencent.com/static_api/v3/bk/css/bk_pack.css" rel="stylesheet">
+    <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/jquery-1.10.2.min.js"></script>
+    <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <!-- 包括所有kendoui的js插件或者可以根据需要使用的js插件调用　-->
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/kendoui-2015.2.624/js/kendo.all.min.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/assets/echarts-2.0/echarts-all.js"></script>
+    <script src="https://magicbox.bk.tencent.com/static_api/v3/bk/js/bk.js"></script>
+    <!-- 数据埋点统计 -->
+    <script src="http://magicbox.bk.tencent.com/static_api/analysis.js"></script>
+    <!-- 以下两个插件用于在IE8以及以下版本浏览器支持HTML5元素和媒体查询，如果不需要用可以移除 -->
+    <!--[if lt IE 9]><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/html5shiv.min.js"></script><script src="https://magicbox.bk.tencent.com/static_api/v3/assets/js/respond.min.js"></script><![endif]-->
+</head>
+
+<body class="bg-white" data-bg-color="bg-white">
+    <div class="king-page-box">
+        <div class="king-layout1-header">
+            <nav class="">
+                <div style="overflow:hidden; z-index: inherit;" class="navbar king-horizontal-nav1  f14">
+                    <div class="navbar-container">
+                        <div class="navbar-header pull-left">
+                            <a class="navbar-brand" href="javascript:;">
+                                <img src="https://magicbox.bk.tencent.com/static_api/v3/bk/images/logo.png" class="logo"> </a>
+                        </div>
+                        <ul class="nav navbar-nav pull-left m0">
+                            <li class="active"><a href="javascript:void(0);">首页</a></li>
+                            <li><a href="javascript:void(0);">关于我们</a></li>
+                            <li><a href="javascript:void(0);">联系我们</a></li>
+                        </ul>
+                        <div class="navbar-header pull-right">
+                            <ul class="nav">
+                                <li class="user-info">
+                                    <a href="javascript:;">
+                                        <img class="img-rounded" src="https://magicbox.bk.tencent.com/static_api/v3/components/horizontal_nav1/images/avatar.png">
+                                        <span>admin</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="king-layout2-main mt15" style="width:960px;">
+            <div style="height: 300px; position: relative;" id="chart_1571017998830" class="king-chart-box chart-area  k-chart" data-role="chart"></div>
+            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1571018005514" class="king-chart-box chart-pie " _echarts_instance_="1571017583051"></div>
+            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1571018021261" class="king-chart-box chart-funnel " _echarts_instance_="1571017583052"></div>
+            <div style="height: 300px; -webkit-tap-highlight-color: transparent; user-select: none; background-color: rgba(0, 0, 0, 0); cursor: default;" id="chart_1571018034166" class="king-chart-box chart-funnel " _echarts_instance_="1571017583053"></div>
+            <div style="height: 300px; position: relative;" id="chart_1571018013352" class="king-chart-box chart-line  k-chart" data-role="chart"></div>
+        </div>
+    </div>
+    <script>
+        // 创建图表
+        function createKendoAreaChart(conf) {
+            $(conf.selector).kendoChart({
+                title: {
+                    text: conf.data.title
+                },
+                theme: 'bootstrap',
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    type: 'area',
+                    area: {
+                        line: {
+                            style: "smooth"
+                        }
+                    }
+                },
+                series: conf.data.series ,
+                valueAxis: {
+                    labels: {
+                        format: "{0}%"
+                    },
+                    line: {
+                        visible: false
+                    },
+                    axisCrossingValue: -10
+                },
+                categoryAxis: {
+                    categories: conf.data.categories ,
+                    majorGridLines: {
+                        visible: false
+                    },
+                    labels: {
+                        rotation: "auto"
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    format: "{0}%",
+                    template: "#= series.name #: #= value #"
+                }
+            });
+            $(window).resize(function(){
+                $(conf.selector).data("kendoChart").refresh();
+            });
+
+        }
+
+        function initKendoAreaChart(conf){
+            // 异步请求后台数据
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var data = {
+                            series: res.data.series,
+                            categories: res.data.categories
+                        };
+                        createKendoAreaChart({
+                            selector: conf.container, // 图表容器
+                            data: data // 图表数据
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        $(function(){
+            initKendoAreaChart({
+                url: 'https://magicbox.bk.tencent.com/static_api/v3/components/charts_area/demo.json',
+                dataType: 'json',
+                container: '#chart_1571017998830'
+            });
+        });
+    </script>
+    <script>
+        // 创建图表
+        function createEPieChart(conf){
+            var myChart = echarts.init(document.getElementById(conf.selector));
+            var aLegend = [];
+            var series = conf.data.series;
+            for (var i = 0; i < series.length; i++) {
+                 aLegend[i] = series[i].name;
+            };
+            // 填入数据
+            myChart.setOption({
+                title : {
+                    text: conf.data.title,
+                    subtext: '',
+                    x:'center'
+                },
+                legend: {
+                    y: 'bottom',
+                    data: aLegend
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} {b} : {c} ({d}%)"
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {
+                            show: true,
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                series: [{
+                    // 根据名字对应到相应的系列
+                    name:'访问来源',
+                    type:'pie',
+                    data: series
+                }]
+            });
+        }
+
+        function initEPieChart(conf){
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var data = res.data;
+                        createEPieChart({
+                            selector: conf.containerId, // 图表容器
+                            data: data, // 图表数据
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        $(function(){
+            initEPieChart({
+                url: 'https://magicbox.bk.tencent.com/static_api/v3/components/chart4/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1571018005514'
+            });
+        });
+    </script>
+    <script>
+        // 创建图表
+        function createEChinaChart(conf){
+            //--- 地图 ---
+            var myChart = echarts.init(document.getElementById(conf.selector));
+            var legendData = [];
+            for(var i = 0; i < conf.data.series.length; i++){
+                legendData.push(conf.data.series[i].name)
+            };
+            myChart.setOption({
+                title:conf.data.title,
+                tooltip : {
+                    trigger: 'item'
+                },
+                legend: {
+                    y:'bottom',
+                    data:legendData
+                },
+                dataRange: {
+                    min: 0,
+                    max: 2500,
+                    x: 'left',
+                    y: 'bottom',
+                    text:['高','低'],           // 文本，默认为数值文本
+                    calculable : true
+                },
+                toolbox: {
+                    show: true,
+                    x: 'center',
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                roamController: {
+                    show: true,
+                    x: 'right',
+                    mapTypeControl: {
+                        'china': true
+                    }
+                },
+                series:conf.data.series
+            });
+        }
+
+        function initEChinaChart(conf){
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var data = res.data;
+                        createEChinaChart({
+                            selector: conf.containerId, // 图表容器
+                            data: data, // 图表数据
+                        });
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
+        $(function(){
+            initEChinaChart({
+                url: 'https://magicbox.bk.tencent.com/static_api/v3/components/chart7/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1571018021261'
+            });
+        });
+    </script>
+    <script>
+        // 创建图表
+        function createEFunnelChart(conf){
+            var myChart = echarts.init(document.getElementById(conf.selector));
+            myChart.setOption({
+                title : conf.data.title,
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} {b} : {c}%"
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                legend: {
+                    y: 'bottom',
+                    data : conf.alegendData
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'漏斗图',
+                        type:conf.type,
+                        data:conf.data.series
+                    }
+                ]
+            });
+        }
+
+        function initEFunnelChart(conf){
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var alegend = res.data.series,alegendData=[];
+                        alegend.sort(function(b,c){
+                            return c.value - b.value;
+                        });
+                        for(var i=0;i < alegend.length;i++){
+                            alegendData.push(alegend[i].name);
+                        }
+                        var data = res.data;
+                        createEFunnelChart({
+                            selector: conf.containerId, // 图表容器
+                            data: data, // 图表数据
+                            alegendData:alegendData,
+                            type: "funnel" // 图表类型
+
+                        });
+                    }
+                }
+            })
+        }
+    </script>
+    <script>
+        $(function(){
+            initEFunnelChart({
+                url: 'https://magicbox.bk.tencent.com/static_api/v3/components/chart5/demo.json',
+                dataType: 'json',
+                containerId: 'chart_1571018034166'
+            });
+        });
+    </script>
+    <script>
+        // 创建图表
+        function createKendoLineChart(conf){
+            $(conf.selector).kendoChart({
+                transitions: false,
+                legend: {
+                   position: "bottom"
+                },
+                colors: ['yellow'],
+                theme : 'bootstrap',
+                seriesDefaults: {
+                    type: 'line',
+                    style: "smooth",
+                    markers: {
+                        visible: false
+                    }
+                },
+                series: conf.data.series,
+                categoryAxis: {
+                    majorGridLines : {
+                        visible: false
+                    },
+                    categories: conf.data.categories,
+                    labels: {
+                        rotation: "auto"
+                    }
+                },
+                tooltip: {
+                    visible: true,
+                    template: "#= category # #= value #"
+                }
+            });
+            //重新绘制
+            $(window).on('resize',function(){
+                var chart = $(conf.selector).data("kendoChart");
+                chart.redraw();
+            });
+        }
+
+        function initKendoLineChart(conf){
+            // 异步请求后台数据
+            $.ajax({
+                url: conf.url,
+                type: 'GET',
+                dataType: conf.dataType,
+                success: function(res){
+                    //获取数据成功
+                    if (res.result){
+                        var data = {
+                            series: res.data.series,
+                            categories: res.data.categories
+                        };
+                        createKendoLineChart({
+                            selector: conf.container, // 图表容器
+                            data: data // 图表数据
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        $(function(){
+            initKendoLineChart({
+                url: 'https://magicbox.bk.tencent.com/static_api/v3/components/charts_line/demo.json',
+                dataType: 'json',
+                container: '#chart_1571018013352'
+            });
+        });
+    </script>
+</body>
+
+</html>
